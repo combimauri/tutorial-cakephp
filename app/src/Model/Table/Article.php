@@ -1,13 +1,18 @@
 <?php
 declare(strict_types=1);
 
-// src/Model/Entity/Article.php
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
 class Article extends Entity
 {
+    public int $user_id;
+
+    public string $title;
+
+    public string $slug;
+
     protected $_accessible = [
         '*' => true,
         'id' => false,
