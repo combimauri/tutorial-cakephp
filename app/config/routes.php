@@ -26,8 +26,8 @@ use Cake\Routing\RouteBuilder;
 
 /*
  * This file is loaded in the context of the `Application` class.
-  * So you can use  `$this` to reference the application class instance
-  * if required.
+ * So you can use  `$this` to reference the application class instance
+ * if required.
  */
 return function (RouteBuilder $routes): void {
     /*
@@ -61,6 +61,13 @@ return function (RouteBuilder $routes): void {
          * ...and connect the rest of 'Pages' controller's URLs.
          */
         $builder->connect('/pages/*', 'Pages::display');
+
+        /*
+         * /articles/tagged/ path to find articles by tag
+         */
+        $builder->scope('/articles', function (RouteBuilder $builder) {
+            $builder->connect('/tagged/*', ['controller' => 'Articles', 'action' => 'tags']);
+        });
 
         /*
          * Connect catchall routes for all controllers.
