@@ -31,8 +31,7 @@
                     'Delete',
                     ['action' => 'delete', $article->id],
                     ['confirm' => 'Are you sure?']
-                )
-                    ?>
+                ) ?>
             </td>
         </tr>
     <?php endforeach; ?>
