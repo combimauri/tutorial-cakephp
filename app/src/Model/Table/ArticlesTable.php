@@ -38,7 +38,11 @@ class ArticlesTable extends Table
             $uuidLength = 5;
             $sluggedTitle = Text::slug($entity->title);
             // trim slug to maximum length defined in schema
-            $hashedSlug = substr($sluggedTitle, 0, 191 - $uuidLength) . '-' . substr(Security::hash(Text::uuid()), 0, $uuidLength);
+            $hashedSlug = substr(
+                $sluggedTitle,
+                0,
+                191 - $uuidLength
+            ) . '-' . substr(Security::hash(Text::uuid()), 0, $uuidLength);
             $entity->slug = $hashedSlug;
         }
     }
