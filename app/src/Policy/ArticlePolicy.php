@@ -68,9 +68,9 @@ class ArticlePolicy
      */
     protected function isAuthor(IdentityInterface $user, Article $article): bool
     {
-        /** @var \Authentication\IdentityInterface $authUser */
-        $authUser = $user;
+        /** @var \App\Model\Entity\User $userEntity */
+        $userEntity = $user->getOriginalData();
 
-        return $article->user_id === $authUser->getIdentifier();
+        return $article->user_id === $userEntity->id;
     }
 }
