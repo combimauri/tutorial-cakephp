@@ -7,6 +7,7 @@ use ArrayObject;
 use Cake\Event\EventInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Table;
+use Cake\Utility\Security;
 use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
@@ -34,9 +35,11 @@ class ArticlesTable extends Table
     public function beforeSave(EventInterface $event, Entity $entity, ArrayObject $options)
     {
         if ($entity->isNew() && !$entity->slug) {
+            $uuidLength = 5;
             $sluggedTitle = Text::slug($entity->title);
             // trim slug to maximum length defined in schema
-            $entity->slug = substr($sluggedTitle, 0, 191);
+            $hashedSlug = substr($sluggedTitle, 0, 191 - $uuidLength) . '-' . substr(Security::hash(Text::uuid()), 0, $uuidLength);
+            $entity->slug = $hashedSlug;
         }
     }
 
