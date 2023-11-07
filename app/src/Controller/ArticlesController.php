@@ -18,7 +18,6 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-        $this->Authorization->skipAuthorization();
         $articles = $this->paginate($this->Articles);
 
         $this->set(compact('articles'));
@@ -33,7 +32,6 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $article = $this->Articles->get($id, [
             'contain' => ['Tags'],
         ]);
@@ -126,7 +124,6 @@ class ArticlesController extends AppController
      */
     public function tags()
     {
-        $this->Authorization->skipAuthorization();
         $tags = $this->request->getParam('pass');
         $articles = $this->Articles->find('tagged', [
             'tags' => $tags,
