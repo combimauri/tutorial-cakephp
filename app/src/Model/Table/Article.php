@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $slug
  * @property string $tag_string
- * @property array $tags
+ * @property \App\Model\Entity\Tag[] $tags
  */
 class Article extends Entity
 {
