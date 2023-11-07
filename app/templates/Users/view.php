@@ -28,11 +28,11 @@
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>
-                    <td><?= h($user->created) ?></td>
+                    <td><?= h($user->created->format(DATE_ISO8601)) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Modified') ?></th>
-                    <td><?= h($user->modified) ?></td>
+                    <td><?= h($user->modified->format(DATE_ISO8601)) ?></td>
                 </tr>
             </table>
             <div class="related">
@@ -59,8 +59,8 @@
                             <td><?= h($articles->slug) ?></td>
                             <td><?= h($articles->body) ?></td>
                             <td><?= h($articles->published) ?></td>
-                            <td><?= h($articles->created) ?></td>
-                            <td><?= h($articles->modified) ?></td>
+                            <td><?= h($articles->created->format(DATE_ISO8601)) ?></td>
+                            <td><?= h($articles->modified->format(DATE_ISO8601)) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Articles', 'action' => 'view', $articles->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Articles', 'action' => 'edit', $articles->id]) ?>

@@ -20,7 +20,7 @@
                 ) ?>
             </h4>
             <span>
-                <?= h($article->created) ?>
+                <?= h($article->created->format(DATE_ISO8601)) ?>
             </span>
         </article>
     <?php endforeach; ?>
