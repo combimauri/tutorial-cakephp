@@ -7,7 +7,6 @@ namespace App\Controller;
  * Articles Controller
  *
  * @property \App\Model\Table\ArticlesTable $Articles
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @method \App\Model\Entity\Article[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ArticlesController extends AppController

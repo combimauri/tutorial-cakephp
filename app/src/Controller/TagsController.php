@@ -7,7 +7,6 @@ namespace App\Controller;
  * Tags Controller
  *
  * @property \App\Model\Table\TagsTable $Tags
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @method \App\Model\Entity\Tag[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TagsController extends AppController
