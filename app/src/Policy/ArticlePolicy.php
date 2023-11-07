@@ -33,7 +33,6 @@ class ArticlePolicy
     public function canEdit(IdentityInterface $user, Article $article)
     {
         return $this->isAuthor($user, $article);
-        // return true;
     }
 
     /**
