@@ -33,7 +33,7 @@ class ArticlesController extends AppController
     public function view($id = null)
     {
         $article = $this->Articles->get($id, [
-            'contain' => [],
+            'contain' => ['Tags'],
         ]);
 
         $this->set(compact('article'));
@@ -60,6 +60,8 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
+        $tags = $this->Articles->Tags->find('list')->all();
+        $this->set('tags', $tags);
         $this->set(compact('article'));
     }
 
@@ -73,7 +75,7 @@ class ArticlesController extends AppController
     public function edit($id = null)
     {
         $article = $this->Articles->get($id, [
-            'contain' => [],
+            'contain' => ['Tags'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
@@ -84,6 +86,8 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
+        $tags = $this->Articles->Tags->find('list')->all();
+        $this->set('tags', $tags);
         $this->set(compact('article'));
     }
 
@@ -105,5 +109,23 @@ class ArticlesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Tags method
+     *
+     * @return void Loads a view template for displaying articles by tag.
+     */
+    public function tags()
+    {
+        $tags = $this->request->getParam('pass');
+        $articles = $this->Articles->find('tagged', [
+            'tags' => $tags,
+        ])
+            ->all();
+        $this->set([
+            'articles' => $articles,
+            'tags' => $tags,
+        ]);
     }
 }

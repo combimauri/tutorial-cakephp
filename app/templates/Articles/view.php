@@ -10,8 +10,11 @@
 <p>
     <?= h($article->body) ?>
 </p>
+<p><b>Tags:</b>
+    <?= h($article->tag_string) ?>
+</p>
 <p><small>Created:
-        <?= $article->created->format(DATE_RFC850) ?>
+        <?= $article->created->format(DATE_ATOM) ?>
     </small></p>
 <p>
     <?= $this->Html->link('Edit', ['action' => 'edit', $article->id]) ?>
