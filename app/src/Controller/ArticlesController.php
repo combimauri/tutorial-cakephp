@@ -47,22 +47,23 @@ class ArticlesController extends AppController
     public function add()
     {
         $article = $this->Articles->newEmptyEntity();
+        $this->Authorization->authorize($article);
 
         if ($this->request->is('post')) {
             /** @var \App\Model\Entity\Article $article */
             $article = $this->Articles->patchEntity($article, $this->request->getData());
-            $article->user_id = 1;
+
+            $article->user_id = $this->request->getAttribute('identity')->getIdentifier();
 
             if ($this->Articles->save($article)) {
-                $this->Flash->success(__('The article has been saved.'));
+                $this->Flash->success(__('Your article has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The article could not be saved. Please, try again.'));
+            $this->Flash->error(__('Unable to add your article.'));
         }
         $tags = $this->Articles->Tags->find('list')->all();
-        $this->set('tags', $tags);
-        $this->set(compact('article'));
+        $this->set(compact('article', 'tags'));
     }
 
     /**
@@ -77,18 +78,21 @@ class ArticlesController extends AppController
         $article = $this->Articles->get($id, [
             'contain' => ['Tags'],
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $article = $this->Articles->patchEntity($article, $this->request->getData());
+        $this->Authorization->authorize($article);
+
+        if ($this->request->is(['post', 'put'])) {
+            $this->Articles->patchEntity($article, $this->request->getData(), [
+                'accessibleFields' => ['user_id' => false],
+            ]);
             if ($this->Articles->save($article)) {
-                $this->Flash->success(__('The article has been saved.'));
+                $this->Flash->success(__('Your article has been updated.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The article could not be saved. Please, try again.'));
+            $this->Flash->error(__('Unable to update your article.'));
         }
         $tags = $this->Articles->Tags->find('list')->all();
-        $this->set('tags', $tags);
-        $this->set(compact('article'));
+        $this->set(compact('article', 'tags'));
     }
 
     /**
@@ -102,6 +106,8 @@ class ArticlesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $article = $this->Articles->get($id);
+        $this->Authorization->authorize($article);
+
         if ($this->Articles->delete($article)) {
             $this->Flash->success(__('The article has been deleted.'));
         } else {

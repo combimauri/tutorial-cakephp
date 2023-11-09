@@ -47,6 +47,7 @@ class TagsController extends AppController
     public function add()
     {
         $tag = $this->Tags->newEmptyEntity();
+
         if ($this->request->is('post')) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
@@ -72,6 +73,7 @@ class TagsController extends AppController
         $tag = $this->Tags->get($id, [
             'contain' => ['Articles'],
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
@@ -96,6 +98,7 @@ class TagsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $tag = $this->Tags->get($id);
+
         if ($this->Tags->delete($tag)) {
             $this->Flash->success(__('The tag has been deleted.'));
         } else {
