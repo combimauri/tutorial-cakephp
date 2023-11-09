@@ -58,7 +58,7 @@ class ArticlesTable extends Table
             ->add('title', 'unique', [
                 'rule' => function ($value, $context) {
                     $conditions = [
-                        'slug' => substr(Text::slug($value), 0, 191)
+                        'slug' => substr(Text::slug($value), 0, 191),
                     ];
 
                     if ($context['newRecord'] === false) {
@@ -66,7 +66,7 @@ class ArticlesTable extends Table
                     }
 
                     return !$this->exists($conditions);
-                }
+                },
             ]);
 
         return $validator;
