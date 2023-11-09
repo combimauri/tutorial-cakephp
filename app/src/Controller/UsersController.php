@@ -24,6 +24,65 @@ class UsersController extends AppController
     }
 
     /**
+     * Before filter method.
+     *
+     * @param \Cake\Event\EventInterface $event The beforeFilter event.
+     * @return void
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+    }
+
+    /**
+     * Login method.
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function login(): ?\Cake\Http\Response
+    {
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+
+        if ($result !== null && $result->isValid()) {
+            // redirect to /articles after login success
+            $redirect = $this->request->getQuery('redirect') ?? [
+                'controller' => 'Articles',
+                'action' => 'index',
+            ];
+
+            return $this->redirect($redirect);
+        }
+        // display error if user submitted and authentication failed
+        if ($this->request->is('post') && ($result === null || !$result->isValid())) {
+            $this->Flash->error(__('Invalid username or password'));
+        }
+
+        return null;
+    }
+
+    /**
+     * Logout method.
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function logout(): ?\Cake\Http\Response
+    {
+        $result = $this->Authentication->getResult();
+
+        if ($result !== null && $result->isValid()) {
+            $this->Authentication->logout();
+
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+
+        return null;
+    }
+
+    /**
      * View method
      *
      * @param string|null $id User id.

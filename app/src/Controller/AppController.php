@@ -24,6 +24,7 @@ use Cake\Controller\Controller;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
@@ -44,10 +45,24 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Authentication.Authentication');
+
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+    }
+
+    /**
+     * Before filter method.
+     *
+     * @param \Cake\Event\EventInterface $event The beforeFilter event.
+     * @return void
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 }
