@@ -23,8 +23,8 @@
                 <tr>
                     <td><?= $this->Number->format($tag->id) ?></td>
                     <td><?= h($tag->title) ?></td>
-                    <td><?= h($tag->created->format(DATE_ISO8601)) ?></td>
-                    <td><?= h($tag->modified->format(DATE_ISO8601)) ?></td>
+                    <td><?= h($tag->created->format(DATE_ATOM)) ?></td>
+                    <td><?= h($tag->modified->format(DATE_ATOM)) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $tag->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tag->id]) ?>

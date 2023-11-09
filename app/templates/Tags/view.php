@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>
-                    <td><?= h($tag->created->format(DATE_ISO8601)) ?></td>
+                    <td><?= h($tag->created->format(DATE_ATOM)) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Modified') ?></th>
@@ -59,8 +59,8 @@
                             <td><?= h($articles->slug) ?></td>
                             <td><?= h($articles->body) ?></td>
                             <td><?= h($articles->published) ?></td>
-                            <td><?= h($articles->created->format(DATE_ISO8601)) ?></td>
-                            <td><?= h($articles->modified->format(DATE_ISO8601)) ?></td>
+                            <td><?= h($articles->created->format(DATE_ATOM)) ?></td>
+                            <td><?= h($articles->modified->format(DATE_ATOM)) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Articles', 'action' => 'view', $articles->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Articles', 'action' => 'edit', $articles->id]) ?>
