@@ -9,6 +9,18 @@ use Migrations\AbstractSeed;
 class ArticlesSeed extends AbstractSeed
 {
     /**
+     * Get Dependencies Method.
+     *
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return [
+            'UsersSeed',
+        ];
+    }
+
+    /**
      * Run Method.
      *
      * Write your database seeder using this method.
